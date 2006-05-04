@@ -4,13 +4,7 @@ package Test::Object;
 
 =head1 NAME
 
-Test::Object - Test any object against registered class-handlers
-
-=head1 STATUS
-
-B<THIS CLASS IS CURRENTLY BEING IMPLEMENTED>
-
-This dist has been uploaded for the purposes of reserving the namespace
+Test::Object - Thoroughly testing objects via registered handlers
 
 =head1 SYNOPSIS
 
@@ -21,12 +15,18 @@ This dist has been uploaded for the purposes of reserving the namespace
   package My::ModuleTester;
   
   use Test::More;
-  use Test::Object ();
+  use Test::Object;
   
   # Foo::Bar is a subclass of Foo
   Test::Object->register(
-  	'Foo'      => \&foo_ok,
-  	'Foo::Bar' => \&foobar_ok,
+  	class => 'Foo',
+  	tests => 5,
+  	code  => \&foo_ok,
+  	);
+  Test::Object->register(
+  	class => 'Foo::Bar',
+  	# No fixed number of tests
+  	code  => \&foobar_ok,
   	);
   
   sub foo_ok {
@@ -40,6 +40,8 @@ This dist has been uploaded for the purposes of reserving the namespace
   }
   
   1;
+  
+  
   
   ###################################################################
   # In test script, test object against all registered classes      #
@@ -62,12 +64,12 @@ situation in which you test a module 4 or 5 subclasses down, which should
 follow the correct behaviour of not just the subclass, but of all the
 parent classes.
 
-This should be done to ensure that the implementation of a sub-class has
+This should be done to ensure that the implementation of a subclass has
 not somehow "broken" the object's behaviour in a more general sense.
 
 C<Test::Object> is a testing package designed to allow you to easily test
 what you believe is a valid object against the expected behaviour of B<all>
-of the classes in it's inheritance tree in one single call.
+of the classes in its inheritance tree in one single call.
 
 To do this, you "register" tests (in the form of CODE or function
 references) with C<Test::Object>, with each test associated with a
@@ -88,14 +90,31 @@ test count.
 
 =cut
 
+use 5.005;
 use strict;
-use Test::More;
 use base 'Exporter';
+use Carp               ();
+use Test::More         ();
+use Test::Object::Test ();
 
 use vars qw{$VERSION @EXPORT};
 BEGIN {
-	$VERSION = '0.01';
-	@EXPORT  = qw{object_ok};
+	$VERSION = '0.03';
+	@EXPORT  = 'object_ok';
+}
+
+
+
+
+
+#####################################################################
+# Registration and Planning
+
+my @TESTS = ();
+
+sub register {
+	my $class = shift;
+	push @TESTS, Test::Object::Test->new( @_ );
 }
 
 
@@ -106,7 +125,15 @@ BEGIN {
 # Testing Functions
 
 sub object_ok {
-	die "object_ok is not yet implemented";
+	my $object = shift;
+
+	# Iterate over the tests and run any we ->isa
+	foreach my $test ( @TESTS ) {
+		next unless $object->isa( $test->class );
+		$test->run( $object );
+	}
+
+	1;
 }
 
 1;
@@ -119,15 +146,20 @@ Bugs should be submitted via the CPAN bug tracker, located at
 
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test-Object>
 
-For other issues, or commercial enhancement or support, contact the author.
+For other issues, contact the author.
 
 =head1 AUTHOR
 
-Adam Kennedy (Maintainer), L<http://ali.as/>, cpan@ali.as
+Adam Kennedy E<lt>cpan@ali.asE<gt>
+
+=head1 SEE ALSO
+
+L<http://ali.as/>, L<Test::More>, L<Test::Builder::Tester>, L<Test::Class>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2005 Adam Kennedy. All rights reserved.
+Copyright 2005, 2006 Adam Kennedy. All rights reserved.
+
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
 

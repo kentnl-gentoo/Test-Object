@@ -1,10 +1,5 @@
 NAME
-    Test::Object - Test any object against registered class-handlers
-
-STATUS
-    THIS CLASS IS CURRENTLY BEING IMPLEMENTED
-
-    This dist has been uploaded for the purposes of reserving the namespace
+    Test::Object - Thoroughly testing objects via registered handlers
 
 SYNOPSIS
       ###################################################################
@@ -14,12 +9,18 @@ SYNOPSIS
       package My::ModuleTester;
   
       use Test::More;
-      use Test::Object ();
+      use Test::Object;
   
       # Foo::Bar is a subclass of Foo
       Test::Object->register(
-            'Foo'      => \&foo_ok,
-            'Foo::Bar' => \&foobar_ok,
+            class => 'Foo',
+            tests => 5,
+            code  => \&foo_ok,
+            );
+      Test::Object->register(
+            class => 'Foo::Bar',
+            # No fixed number of tests
+            code  => \&foobar_ok,
             );
   
       sub foo_ok {
@@ -54,12 +55,12 @@ DESCRIPTION
     should follow the correct behaviour of not just the subclass, but of all
     the parent classes.
 
-    This should be done to ensure that the implementation of a sub-class has
+    This should be done to ensure that the implementation of a subclass has
     not somehow "broken" the object's behaviour in a more general sense.
 
     "Test::Object" is a testing package designed to allow you to easily test
     what you believe is a valid object against the expected behaviour of all
-    of the classes in it's inheritance tree in one single call.
+    of the classes in its inheritance tree in one single call.
 
     To do this, you "register" tests (in the form of CODE or function
     references) with "Test::Object", with each test associated with a
@@ -83,16 +84,19 @@ SUPPORT
 
     <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test-Object>
 
-    For other issues, or commercial enhancement or support, contact the
-    author.
+    For other issues, contact the author.
 
 AUTHOR
-    Adam Kennedy (Maintainer), <http://ali.as/>, cpan@ali.as
+    Adam Kennedy <cpan@ali.as>
+
+SEE ALSO
+    <http://ali.as/>, Test::More, Test::Builder::Tester, Test::Class
 
 COPYRIGHT
-    Copyright (c) 2005 Adam Kennedy. All rights reserved. This program is
-    free software; you can redistribute it and/or modify it under the same
-    terms as Perl itself.
+    Copyright 2005, 2006 Adam Kennedy. All rights reserved.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
 
     The full text of the license can be found in the LICENSE file included
     with this module.

@@ -1,14 +1,16 @@
+
+no_index: 
+  directory: 
+    - inc
+    - t
+generated_by: Module::Install version 0.62
+distribution_type: module
+version: 0.03
 name: Test-Object
-version: 0.01
-abstract: Test an object against all classes it belongs to
 author: Adam Kennedy <cpan@ali.as>
 license: perl
-distribution_type: module
-requires:
-  perl: 5.005
+requires: 
   Test::More: 0.47
+  perl: 5.005
   File::Spec: 0.82
-no_index:
-  directory:
-    - inc
-generated_by: Module::Install version 0.36
+abstract: Thoroughly testing objects via registered handlers
