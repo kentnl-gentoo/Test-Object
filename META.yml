@@ -5,15 +5,16 @@ no_index:
     - t
 generated_by: Module::Install version 0.62
 distribution_type: module
-version: 0.04
+version: 0.05
 name: Test-Object
 author: Adam Kennedy <cpan@ali.as>
 license: perl
 requires: 
-  Test::More: 0.47
+  Test::More: 0.42
   Scalar::Util: 1.16
   perl: 5.005
   File::Spec: 0.80
   overload: 0
+  Exporter: 0
   Carp: 0
 abstract: Thoroughly testing objects via registered handlers
