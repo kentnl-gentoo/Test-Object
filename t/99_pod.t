@@ -1,6 +1,23 @@
+#!/use/bin/perl
+
 use Test::More;
+
+# Skip developer testing except for during automated testing
+unless ( $ENV{AUTOMATED_TESTING} ) {
+	plan skip_all => "Skipping module author tests";
+	exit(0);
+}
+
+# Try to load Test::Pod
 eval "use Test::Pod 1.00";
-plan skip_all => "Test::Pod 1.00 required for testing POD" if $@;
+if ( $@ ) {
+	plan skip_all => "Test::Pod 1.00 required for testing POD";
+	exit(0);
+}
+
+
+
+
 
 #####################################################################
 # WARNING: INSANE BLACK MAGIC
