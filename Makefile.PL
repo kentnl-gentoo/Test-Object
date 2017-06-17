@@ -1,4 +1,4 @@
-use inc::Module::Install;
+use lib q[.]; use inc::Module::Install;
 
 name     'Test-Object';
 all_from 'lib/Test/Object.pm';
