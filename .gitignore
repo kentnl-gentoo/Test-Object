@@ -1,0 +1,6 @@
+/.ackrc
+/.build/
+!/.gitignore
+/.latest
+/Test-Object-*/
+/Test-Object-*.tar.gz

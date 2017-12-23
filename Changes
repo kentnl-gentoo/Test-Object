@@ -1,4 +1,7 @@
-Revision history for Perl extension Test::Object
+Revision history for Test-Object
+
+{{$NEXT}}
+        - switch packaging to Dist::Zilla
 
 0.07      2006-09-07
 	# This release contains only build-time changes
@@ -21,7 +24,7 @@ Revision history for Perl extension Test::Object
 0.03      2006-05-04
 	- Actually implement some non-trivial proportion of Test::Object
 
-0.02 Missing
+(0.02 Missing)
 
 0.01      2005-05-30
 	- Created the initial version of the module

@@ -4,10 +4,7 @@ use strict;
 use Carp         ();
 use Scalar::Util ();
 
-use vars qw{$VERSION};
-BEGIN {
-	$VERSION = '0.08';
-}
+our $VERSION = '0.08';
 
 
 

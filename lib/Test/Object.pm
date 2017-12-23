@@ -90,7 +90,6 @@ test count.
 
 =cut
 
-use 5.005;
 use strict;
 use Carp               ();
 use Exporter           ();
@@ -98,9 +97,9 @@ use Test::More         ();
 use Scalar::Util       ();
 use Test::Object::Test ();
 
-use vars qw{$VERSION @ISA @EXPORT};
+our $VERSION = '0.08';
+use vars qw{@ISA @EXPORT};
 BEGIN {
-	$VERSION = '0.08';
 	@ISA     = 'Exporter';
 	@EXPORT  = 'object_ok';
 }
